@@ -1,5 +1,6 @@
 package com.hsbg;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,26 +15,25 @@ import org.springframework.web.client.RestTemplate;
 import com.hsbg.models.CompanyEmployees;
 import com.hsbg.models.Employee;
 import com.hsbg.models.EmployeeRatingCatalog;
+import com.hsbg.models.Rating;
 
 @RestController
 @RequestMapping("/catalog")
 public class EmployeeCatalogController {
 	
+	//Remember there is a Class level request mapping also out here.
 	@RequestMapping("/companies/{companyId}")
-	public List<Employee> getEmployeesRating(@PathVariable String companyId){
-		
-		//List<Employee> getAllEmployees(@PathVariable String companyId)
-		List<Employee> employeeList = Arrays.asList(
-				new Employee("1", "Vilas", 123, "Freelancer"),
-				new Employee("2", "George", 321, "Sr Manager")
-				);
-		//Rating getEmployeeRatings
-
+	public List<EmployeeRatingCatalog> getEmployeesRating(@PathVariable String companyId){
 		RestTemplate restTemplate = new RestTemplate();///
 		CompanyEmployees compEmps = restTemplate.getForObject("http://localhost:8081/companies/"+companyId+"/compemployees", CompanyEmployees.class);
-		return compEmps.getEmployeeList();
+		int empListSize = compEmps.getEmployeeList().size();
+		List<EmployeeRatingCatalog> employeesRatingList = new ArrayList<EmployeeRatingCatalog>();
+		for (int i =0; i < empListSize; i++) {
+			Employee e = compEmps.getEmployeeList().get(i);
+			Rating r = restTemplate.getForObject("http://localhost:8082/ratings/employeerating/"+e.getId(), Rating.class);
+			employeesRatingList.add(new EmployeeRatingCatalog(e, r));
+		}
 		
-		/*return Collections.singletonList(
-				new EmployeeRatingCatalog("Vilas", "IT", new Integer(4)));*/
+		return employeesRatingList;
 	}
 }

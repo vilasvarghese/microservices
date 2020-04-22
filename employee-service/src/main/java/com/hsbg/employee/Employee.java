@@ -28,7 +28,7 @@ public class Employee {
 		this.id = id;
 		this.name = name;
 		this.salary = salary;
-		//this.company = new Company(companyId, "",0);
+		this.company = new Company(companyId, "",0);
 	}
 	public String getId() {
 		return id;

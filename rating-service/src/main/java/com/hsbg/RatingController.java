@@ -13,6 +13,7 @@ import com.hsbg.models.Rating;
 @RequestMapping("/ratings")
 public class RatingController {
 
+	//There is a class level mapping as well.
 	@RequestMapping("/employeerating/{employeeId}")
 	public Rating getEmployeeRatings(@PathVariable String employeeId){
 		return new Rating(employeeId, 4);

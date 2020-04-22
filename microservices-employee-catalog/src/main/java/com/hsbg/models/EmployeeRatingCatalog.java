@@ -1,42 +1,29 @@
 package com.hsbg.models;
 
 public class EmployeeRatingCatalog {
-	private String empName;
-	private String department;
-	private Integer rating;
-
-
+	private Employee employee;
+	private Rating rating;
 	public EmployeeRatingCatalog() {
 		super();
 	}
-
-	public EmployeeRatingCatalog(String empName, String department, Integer rating) {
+	
+	public EmployeeRatingCatalog(Employee employee, Rating rating) {
 		super();
-		this.empName = empName;
-		this.department = department;
+		this.employee = employee;
 		this.rating = rating;
 	}
-
-	public Integer getRating() {
+	public Employee getEmployee() {
+		return employee;
+	}
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+	public Rating getRating() {
 		return rating;
 	}
-
-	public void setRating(Integer rating) {
+	public void setRating(Rating rating) {
 		this.rating = rating;
 	}
-
-	public String getEmpName() {
-		return empName;
-	}
 	
-	public void setEmpName(String empName) {
-		this.empName = empName;
-	}
-	public String getDepartment() {
-		return department;
-	}
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
+	
 }
