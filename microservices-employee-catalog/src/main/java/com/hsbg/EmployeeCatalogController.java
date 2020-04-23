@@ -25,12 +25,12 @@ public class EmployeeCatalogController {
 	@RequestMapping("/companies/{companyId}")
 	public List<EmployeeRatingCatalog> getEmployeesRating(@PathVariable String companyId){
 		RestTemplate restTemplate = new RestTemplate();///
-		CompanyEmployees compEmps = restTemplate.getForObject("http://localhost:8081/companies/"+companyId+"/compemployees", CompanyEmployees.class);
+		CompanyEmployees compEmps = restTemplate.getForObject("http://EMPLOYEE-SERVICE:8081/companies/"+companyId+"/compemployees", CompanyEmployees.class);
 		int empListSize = compEmps.getEmployeeList().size();
 		List<EmployeeRatingCatalog> employeesRatingList = new ArrayList<EmployeeRatingCatalog>();
 		for (int i =0; i < empListSize; i++) {
 			Employee e = compEmps.getEmployeeList().get(i);
-			Rating r = restTemplate.getForObject("http://localhost:8082/ratings/employeerating/"+e.getId(), Rating.class);
+			Rating r = restTemplate.getForObject("http://RATING-SERVICE:8082/ratings/employeerating/"+e.getId(), Rating.class);
 			employeesRatingList.add(new EmployeeRatingCatalog(e, r));
 		}
 		
