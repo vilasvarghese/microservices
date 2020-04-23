@@ -16,7 +16,7 @@ public class SeedData {
 	private EmployeeService employeeService;
 	
 	@RequestMapping("/seeddata")
-	public void seedData() {
+	public String seedData() {
 		//Create a company
 		companyService.addCompany(new Company("Hexaware", "Hexaware India Pvt. Ltd.", 100000));
 		companyService.addCompany(new Company("Oracle", "Oracle India Pvt. Ltd.", 50000));
@@ -27,6 +27,6 @@ public class SeedData {
 		employeeService.addEmployee(new Employee("Siji", "Siji Vilas", 90000, "Hexaware"));
 		employeeService.addEmployee(new Employee("Sibi", "Sibi Vilas", 100000, "Hexaware"));
 
-
+		return "Data seed successful";
 	}
 }
