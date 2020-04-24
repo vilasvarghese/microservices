@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,17 +21,19 @@ import com.hsbg.models.Rating;
 @RestController
 @RequestMapping("/catalog")
 public class EmployeeCatalogController {
+
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	//Remember there is a Class level request mapping also out here.
 	@RequestMapping("/companies/{companyId}")
 	public List<EmployeeRatingCatalog> getEmployeesRating(@PathVariable String companyId){
-		RestTemplate restTemplate = new RestTemplate();///
-		CompanyEmployees compEmps = restTemplate.getForObject("http://EMPLOYEE-SERVICE:8081/companies/"+companyId+"/compemployees", CompanyEmployees.class);
+		CompanyEmployees compEmps = restTemplate.getForObject("http://EMPLOYEE-SERVICE/companies/"+companyId+"/compemployees", CompanyEmployees.class);
 		int empListSize = compEmps.getEmployeeList().size();
 		List<EmployeeRatingCatalog> employeesRatingList = new ArrayList<EmployeeRatingCatalog>();
 		for (int i =0; i < empListSize; i++) {
 			Employee e = compEmps.getEmployeeList().get(i);
-			Rating r = restTemplate.getForObject("http://RATING-SERVICE:8082/ratings/employeerating/"+e.getId(), Rating.class);
+			Rating r = restTemplate.getForObject("http://RATING-SERVICE/ratings/employeerating/"+e.getId(), Rating.class);
 			employeesRatingList.add(new EmployeeRatingCatalog(e, r));
 		}
 		
