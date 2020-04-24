@@ -17,6 +17,7 @@ import com.hsbg.models.CompanyEmployees;
 import com.hsbg.models.Employee;
 import com.hsbg.models.EmployeeRatingCatalog;
 import com.hsbg.models.Rating;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 @RequestMapping("/catalog")
@@ -27,6 +28,7 @@ public class EmployeeCatalogController {
 	
 	//Remember there is a Class level request mapping also out here.
 	@RequestMapping("/companies/{companyId}")
+	@HystrixCommand(fallbackMethod = "fallbackEmployeeRating")
 	public List<EmployeeRatingCatalog> getEmployeesRating(@PathVariable String companyId){
 		CompanyEmployees compEmps = restTemplate.getForObject("http://EMPLOYEE-SERVICE/companies/"+companyId+"/compemployees", CompanyEmployees.class);
 		int empListSize = compEmps.getEmployeeList().size();
@@ -38,5 +40,12 @@ public class EmployeeCatalogController {
 		}
 		
 		return employeesRatingList;
+	}
+	
+	public List<EmployeeRatingCatalog> fallbackEmployeeRating(@PathVariable String companyId){
+		return Arrays.asList(
+				new EmployeeRatingCatalog(
+						new Employee("0", "Timeout artificially created!!", 0, "Hexaware"),
+						new Rating("0",4)));
 	}
 }

@@ -26,6 +26,14 @@ public class EmployeeController {
 
 	@RequestMapping("/companies/{companyId}/compemployees")
 	public CompanyEmployees getAllCompanyEmployees(@PathVariable String companyId){
+		//Introducing a wait of more than 500 ms to simulate fault tolerance
+		System.out.println("just before ");
+		try {
+			Thread.sleep(3000);
+		}catch(Exception e) {
+			System.out.println("Exception "+e.toString());
+		}
+		
 		CompanyEmployees compEmps = new CompanyEmployees();
 		compEmps.setEmployeeList(employeeService.getAllEmployees(companyId));
 		return compEmps;
