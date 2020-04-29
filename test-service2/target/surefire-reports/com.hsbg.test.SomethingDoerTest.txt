@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.hsbg.test.SomethingDoerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.007 s <<< FAILURE! - in com.hsbg.test.SomethingDoerTest
+testAdd1  Time elapsed: 0.006 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Test1> but was: <Test2>
+	at com.hsbg.test.SomethingDoerTest.testAdd1(SomethingDoerTest.java:29)
+
