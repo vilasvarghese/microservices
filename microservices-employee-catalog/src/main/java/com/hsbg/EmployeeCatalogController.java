@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +28,14 @@ public class EmployeeCatalogController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeCatalogController.class);
+	
 	//Remember there is a Class level request mapping also out here.
 	@RequestMapping("/companies/{companyId}")
 	@HystrixCommand(fallbackMethod = "fallbackEmployeeRating")
 	public List<EmployeeRatingCatalog> getEmployeesRating(@PathVariable String companyId){
+		LOGGER.info("getEmployeesRating begin");
+		
 		CompanyEmployees compEmps = restTemplate.getForObject("http://EMPLOYEE-SERVICE/companies/"+companyId+"/compemployees", CompanyEmployees.class);
 		int empListSize = compEmps.getEmployeeList().size();
 		List<EmployeeRatingCatalog> employeesRatingList = new ArrayList<EmployeeRatingCatalog>();
@@ -38,7 +44,7 @@ public class EmployeeCatalogController {
 			Rating r = restTemplate.getForObject("http://RATING-SERVICE/ratings/employeerating/"+e.getId(), Rating.class);
 			employeesRatingList.add(new EmployeeRatingCatalog(e, r));
 		}
-		
+		LOGGER.info("end getEmployeesRating");
 		return employeesRatingList;
 	}
 	
