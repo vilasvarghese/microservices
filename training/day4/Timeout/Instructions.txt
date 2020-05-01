@@ -1,0 +1,4 @@
+
+Reference 1: 
+https://howtodoinjava.com/spring-boot2/resttemplate/resttemplate-timeout-example/
+

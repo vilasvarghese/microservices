@@ -1,0 +1,15 @@
+Create the project in Eclipse
+Open Eclipse STS.
+Right click on the project panel (or go on Menu > File) then New > Spring Starter Project.
+Fill the following fields in the form:
+	Name: the eclipse project name (e.g. “spring-boot-basewebapp”).
+	Group: a group name for your projects (e.g. “netgloo”).
+	Artifact: the name of the jar file (e.g. “spring-boot-basewebapp”).
+	Description: a brief human readable description (e.g. “Spring Boot base Web Application”).
+	Package name: the java root package name (e.g. “netgloo”).
+
+Note: Group and Artifact are from Maven, and here there is a brief explanation if you want to follow their conventions: http://maven.apache.org/guides/mini/guide-naming-conventions.html.
+
+Click Next. Search and select the “Web” dependency, then click Finish.
+Will be downloaded a basic project template from the Spring web site.
+

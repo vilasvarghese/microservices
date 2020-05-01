@@ -1,0 +1,147 @@
+Spring-Retry
+
+Thanks to https://howtodoinjava.com/spring-boot2/spring-retry-module/
+
+1. Create a Spring web project.
+
+2. Add dependency in pom.xml - 
+
+<dependency>
+    <groupId>org.springframework.retry</groupId>
+    <artifactId>spring-retry</artifactId>
+    <version>${version}</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-aspects</artifactId>
+    <version>${version}</version>
+</dependency>
+
+
+3. Create rest api endpoint
+
+simulateretry and simulateretryfallback are two parameters in the call
+
+MyRestController.java
+package com.example.springretry;
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+ 
+@RestController
+public class MyRestController {
+ 
+    @Autowired
+    BackendAdapter backendAdapter;
+ 
+    @GetMapping("/retry")
+    @ExceptionHandler({ Exception.class })
+    public String validateSPringRetryCapability(@RequestParam(required = false) boolean simulateretry,
+                                @RequestParam(required = false) boolean simulateretryfallback) 
+    {
+        System.out.println("===============================");
+        System.out.println("Inside RestController mathod..");
+ 
+        return backendAdapter.getBackendResponse(simulateretry, simulateretryfallback);
+    }
+}
+
+/*
+simulateretry – 
+	parameter to simulate the exception scenario, so that spring can retry.
+simulateretryfallback – 
+	as we are simulating the exception, after retry certain times we can either expect a successful backend call or all retry falls. In this case we will go to the fall back method to get hard-coded/error response. Now this parameter will ensure all the retry will fail and we will go to fall back path only.
+*/
+
+4. @EnableRetry annotation
+
+SpringRetryApplication.java
+package com.example.springretry;
+ 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.retry.annotation.EnableRetry;
+ 
+@EnableRetry
+@SpringBootApplication
+public class SpringRetryApplication {
+ 
+    public static void main(String[] args) {
+        SpringApplication.run(SpringRetryApplication.class, args);
+    }
+}
+
+5. Backend Service Adapter interface and implementation
+Now we will create one interface/implementation for calling the external service. Here we will not actually call any external service call, rather will simulate the success/failure scenarios by adding some random logic, as below.
+
+BackendAdapter.java
+package com.example.springretry;
+ 
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
+ 
+public interface BackendAdapter {
+ 
+    @Retryable(value = { RemoteServiceNotAvailableException.class }, maxAttempts = 3, backoff = @Backoff(delay = 1000))
+    public String getBackendResponse(boolean simulateretry, boolean simulateretryfallback);
+ 
+    @Recover
+    public String getBackendResponseFallback(RuntimeException e);
+ 
+}
+BackendAdapterImpl.java
+package com.example.springretry;
+ 
+import java.util.Random;
+import org.springframework.stereotype.Service;
+ 
+@Service
+public class BackendAdapterImpl implements BackendAdapter {
+ 
+    @Override
+    public String getBackendResponse(boolean simulateretry, boolean simulateretryfallback) {
+ 
+        if (simulateretry) {
+            System.out.println("Simulateretry is true, so try to simulate exception scenario.");
+ 
+            if (simulateretryfallback) {
+                throw new RemoteServiceNotAvailableException(
+                        "Don't worry!! Just Simulated for Spring-retry..Must fallback as all retry will get exception!!!");
+            }
+            int random = new Random().nextInt(4);
+ 
+            System.out.println("Random Number : " + random);
+            if (random % 2 == 0) {
+                throw new RemoteServiceNotAvailableException("Don't worry!! Just Simulated for Spring-retry..");
+            }
+        }
+ 
+        return "Hello from Remote Backend!!!";
+    }
+ 
+    @Override
+    public String getBackendResponseFallback(RuntimeException e) {
+        System.out.println("All retries completed, so Fallback method called!!!");
+        return "All retries completed, so Fallback method called!!!";
+    }
+}
+
+
+/*
+@Retryable – This is the main annotation after @EnableRetry. This annotation tells that if we get RemoteServiceNotAvailableException from the method then retry maximum 3 times before sending the response. Also we are introducing delay of 1 second in each retry.
+@Recover – in the fallback method indicates that if we don’t get any success response after 3 retry, response will come from this fallback method. Make sure you pass expected exception as parameter, else spring will have hard time finding the exact method.
+In the actual method from where the Remote service will be invoked, we have added some custom logic to control the Exception based on simulateretry and simulateretryfallback parameters. The code is simple, just returning the expected exception for retry if the conditions are met, else we will return the success response. Also we have added some random logic based on the Random number to mimic the randomness of the failure.
+The fallback method implementation sends simple fallback response.
+*/
+
+6. Test the application
+The testing section is pretty straightforward. We will pass proper parameter in the REST request to simulate the retry requests.
+
+6.1. Test retry – success or fallback
+Let’s start with 'http://localhost:8080/retry?simulateretry=true&simulateretryfallback=false'
+
+6.2. Now try with 'http://localhost:8080/retry?simulateretry=true&simulateretryfallback=true'

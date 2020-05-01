@@ -1,0 +1,76 @@
+Refer 
+	Refer FirstSpringBoot\config\ConfigurationController.java
+
+
+Reference 1: 
+	https://docs.spring.io/spring-boot/docs/2.1.8.RELEASE/reference/html/boot-features-external-config.html
+	
+
+1. Create a web spring boot application
+2. Define few properties in key=value pairs in application.properties.
+3. Autowire values using @values annotation.
+		@Value("${key}")
+		
+	3 different ways 
+	----------------
+	Refer FirstSpringBoot\config\DbSettings.java
+	
+	
+4. Refer one property file from another
+	e.g.
+	country.message = Welcome to ${country.name}
+
+5. Go to the folder where your .war file is
+	java -jar <your service build>.war / .jar
+	
+	http://localhost:8080/stateList
+	
+	
+------------------------------------------------------------------------------------	
+	If you don't know where is your war/jar file, then execute mvn clean install 
+------------------------------------------------------------------------------------	
+	
+Different ways to override the values
+-------------------------------------
+a. 	cd to the folder where you have the war.
+
+	->C:\Users\vilas\.m2\repository\com\example\FirstSpringBoot\0.0.1-SNAPSHOT
+	
+	->java -jar -Dlist.of.states="kerala,TamilNadu" FirstSpringBoot-0.0.1-SNAPSHOT.jar
+	
+	http://localhost:8080/stateList
+
+b. Have a application.properties in the same folder as where you war/jar is.
+
+	Create a new application.properties file and define equivalent of each properties
+	java -jar <your file>.jar/.war
+
+		It will override the application.properties value with what is the there on the local machine.
+		
+
+6. Defining a default value
+	a. Remove a porperty from application.properties and try to start the application.
+		It fails
+		
+	b. But look at the defaultValue variable in ConfigurationController.
+		There is no equivalent for this in application.properties
+	
+7. List of values
+	Look at the stateList
+		A string got automatically converted to list.
+		
+8. Expression
+	Remember sPel from the architecture diagram.
+	You can define a value itself as key value pairs
+	Define it like below 
+		electionRule={age: 18, citizen: 'Indian'}
+	While you use
+		@Value("#{${electionRule}}") - it can get evaluated to a Map.
+	We can return/use this Map
+	
+	Refer ConfigurationController.java
+
+
+	
+	
+	

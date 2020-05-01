@@ -1,0 +1,20 @@
+Hystrix Circuit Breaker
+-----------------------
+Better do this on employee-catalog-service
+
+1. Add dependency
+
+	    <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+			<version>Hoxton.SR3</version>
+		</dependency>
+
+	#Check the dependency in mavenrepository....
+	
+	
+2. Add @EnableCircuitBreaker in MicroservicesEmployeeCatalogApplication
+
+3. Add @HystrixCommand(fallbackMethod = "fallbackEmployeeRating") for the method which you want to have circuit breaker for.
+
+4. Configure Hystrix behavior
