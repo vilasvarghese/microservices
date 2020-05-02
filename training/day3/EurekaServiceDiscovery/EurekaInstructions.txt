@@ -1,0 +1,82 @@
+Reference:  service-discovery service
+
+Eureka Server configuration
+----------------------------
+
+1. Create a web spring boot service with 
+		Eureka server and 
+		Eureka client 
+	dependency
+	
+	spring-cloud.version I am using is Hoxton.SR3.
+	
+2. Add following repositories
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
+
+	this will add some dependecies which otherwise are missed.
+	Ensure the project is from java 8, else they need to add more Jaxb dependencies
+
+3. Add following into application.properties
+
+spring.application.name = eureka-server		# Application Server Name
+server.port = 8761							# Port at which tomcat should listen. Without this it will get messed up.
+#The below two properties (=true) are required in production. Their we would run eureka on HA mode.
+#So each Eureka server would also double up as Eureka client and start registering with other servers.
+#Since here we don't do that add the following properties as well
+eureka.client.register-with-eureka = false	# With this server does not attempt to register itself. Else you get lot of error on the console
+eureka.client.fetch-registry = false		# With this, we inform customers that they must not store the data of the available instances 	
+											#	in their local cache. This means that they must consult the Eureka server whenever 
+											#	they need to access a service. In production, this is often set to true to 
+											#	expedite requests. I must comment that this cache is updated every 30 seconds by default.
+
+4. Add @EnableEurekaServer and start the server.
+
+5. Run the spring boot application and access it on http:///localhost:8761
+
+
+Eureka client configuraitons
+----------------------------
+
+1. Add <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+		to properties section
+		
+2. Add the following dependencies
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+	</dependency>
+
+3. Update the application properties 
+	spring.application.name = <Your service name>
+
+4. Start the client services
+	
+5. Now refresh http://localhost:8761/
+	All the services should be listed there.
+
+6. Update the place where you are accessing the rest api using restTemplate to <Your service name>
+
+	http://localhost ... to httpL//<Your service name>:<port number>
+
+7. Restart the service and attempt calling the API. API should work.
+
+
+8. Add @Autowired for RestTemplate in Controller
+	This probably is already the case.
+	
+9. Add getter method for RestTemplate in Application startup file
+	To the getRestTemplate methods 
+		a. Add @Bean annotation
+		b. Add @LoadBalancer to it so that it can be loadbalancing for us.
+
+	What is now the difference between client and server side discovery? :)
