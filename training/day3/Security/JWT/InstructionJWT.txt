@@ -1,0 +1,176 @@
+Implement JWT based authentication and autherization.
+
+Create a new authentication API endpoint
+Examine every incoming request for valid JWT and authorize
+
+Reference: 
+
+1. Create a project with following dependencies
+	Spring web and 
+	Spring security
+
+2. Create an endpoint
+	e.g. HelloWorldController class
+	The /hello url here is not accessible to customers.
+	Since we have added a security dependency, this service is behind an authentication wall.
+	So we cannot access it.
+	
+3. Let's do simple authentication to access this api.
+
+	Create a WebSecurityConfig  (in SpringSecurityJwtApplication.java) extends WebSecurityConfigurerAdapter
+
+	
+
+	a. EnableWebSecurity by adding @EnableWebSecurity
+	
+	b. Have an instance of class implementing UserDetailsService.
+	
+	So create a new class implementing  UserDetailsService
+		UserDetailsService has
+			loadUserByUsername
+			Takes userName as input
+			return User object with username and pwd if there is a User with this userName.
+			It not throw an Exception
+	Mark it as a Service.
+	
+	Autowire it into WebSecurityConfig
+	
+	b. Define the password encoding 
+		
+	
+	
+	
+	
+	Spring security requires an implementation of the following classes 
+		UserDetails
+		UserDetailsService
+		
+	Spring sercurity from a security point of view is interested to know the following
+		What are his 
+			authorities, 
+			roles,
+			username 
+			pwd
+			expired/active ect.
+			
+		We can store more information.
+		We need to map Our UserDetail to our model.User class.
+		A best option is Decorator pattern
+		 
+		
+JWT (JSON web token)
+
+4. Add the following dependencies
+		jjwt (Java json web token)
+		jaxb-api library.
+			There are few jaxb dependencies we need in both java 8 or otherwise.
+			
+	
+5. 	Create a class called JwtUtil
+	Refer to the JwtUtil.java.
+		Given a username, it can generate a token.
+		Latter it can validate the username.
+		
+6. 	Create an end point for creating this jwt.
+	
+
+	
+Client is going to keep this token and send it in future in the request header.
+We should retrieve the token from header. Validate the token. If valid, is that in the security context as the currently logged in user.
+
+7. Create models.AuthenticationRequest.java
+		This is the class where we will take the request. So
+		username and password
+		With getters and setters for them.
+		Have a constructor with no args
+		
+
+8. Create a models.AuthenticationResponse.
+		This should return a jwt token. So
+		Constructor with (jwt)
+		getter for jwt.
+		
+9. In the Controller, create a new post end point
+	/authenticate 
+	This uses the spring's AuthenticationManager.authenticate method.
+		This will get the UserDetail object from UserDetailsService
+		Spring's default validation works.
+			Is username and pwd same in our case.
+		If this fails, then throw and Exception.
+	
+	If validation passes, then 
+		generate the token.
+		Return a ResponseEntity with token in it.
+		
+	Reference: HelloWorldController.createAuthenticationToken method
+	
+	
+	Question: Why is this a POST method?
+
+
+Need to tell spring
+Intercept all incoming requests
+Extract jwt from the header
+Validate and set in execution context saying that this is a valid user. Let's allow him.
+
+10. Create class filters.JwtRequestFilter extends OncePerRequestFilter
+	
+	Implement doFilterInternal(req, res, FilterChain)
+		FilterChain: Option of passing to the next filter chain or are we ending the request.
+	
+	Logic 
+		Get the Authorization header.
+		Check if it starts with Bearer
+		Extract the jwt token from it.
+		Using the jjwt api, extract the user name from it.
+		Load the user based on username.
+	
+		If username is not null and something has not already went into the security context. If something is already there then we don't need to check. Already the authentication is over.
+		
+		load the userDetail based on the username
+		validate the token passing the jwt token and username to it.
+		
+			If validation is successful.
+				Since Spring security internally uses UsernamePasswordAuthenticationToken, we are creating the same. 
+				for managing authentication in the context of username and pwd.
+				
+				Set this to the request object.
+				
+				Above is what generally Spring security do to allow each request to go through after username and pwd matches.
+	 
+		chain.doFilter: Continue with the normal operation (request object has the validation response).
+		
+Now we need to tell the SecurityConfigurer to use our new filter.
+	Don't bother creating a session. We will do it.
+	
+11. Add the configure method in WebSecurityConfig
+			httpSecurity.csrf().disable()
+				.authorizeRequests().antMatchers("/authenticate").permitAll().
+						anyRequest().authenticated().and().
+						exceptionHandling().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+	Disable csrf.
+	Permit all requests coming with "/authenticate"
+	For others don't create session.
+	We will add session by httpSecurity.addFilterBefore
+		
+12. 
+	a. Make the following request		
+	http://localhost:8080/authenticate
+	Request type: POST.
+	header 
+		Content-Type - json
+	body
+		{
+			"username": "vilas",
+			"password": "vilas"
+		}
+	
+	This returns a jwt token.
+	
+	b. Make the following request.	
+	http://localhost:8080/hello
+	header
+		Key: Authorization
+		Value: Bearer<space><jwt>

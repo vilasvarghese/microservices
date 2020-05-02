@@ -1,0 +1,37 @@
+https://spring.io/guides/gs/routing-and-filtering/
+
+1. Create a new zuul and web project 
+	Should have dependency zuul and web 
+
+2. Add @EnableZuulProxy to the Application class
+
+3. Add the following to the application.properties
+
+	zuul.routes.<service-name>.url=http://localhost:<service-port>
+	#Add the above entries for as many service as you would want.
+	
+	ribbon.eureka.enabled=false
+	server.port=8000
+	
+4. Now start all the servers
+		Access it using http://localhost:8000/<service-name>/<contorller-url>
+		
+		e.g. http://localhost:8000/employees/seeddata #here employees was my service name 
+
+Filters
+-------		
+Refer https://spring.io/guides/gs/routing-and-filtering/ for filtering		
+	Filters are also implemeted in SimpleFilter
+	
+1. 	Refer SimpleFilter.java
+		The different methods.
+	
+	EmployeeApigatewayApplication.java.
+		The Bean access.
+
+2. 	Execute it. #Bring up only api-gateway
+	Verify that the run gets executed before it is forwarded to the actual service.
+	http://localhost:8000/employees/seeddata
+	
+	
+	
