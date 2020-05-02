@@ -1,0 +1,89 @@
+Reference: 
+employee-service
+
+Environment setup
+
+1. Refer to any existing web project with a Controller, Service and Repository
+	e.g. employee-service
+	
+2. By default Spring latest versions include Junit 4.
+	So exclude junit 4 and include junit 5
+	
+	Add 
+				<exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+				
+	in spring-boot-starter-test as follows
+	    <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+		
+	N.B: There can be wintage exclusion already. Please retain that.
+
+3. Add junit 5 dependencies
+		<dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+		
+4. Select a file and create a test case for that.
+	New -> "Other" -> Test (JUnit test case)
+	
+Refer either slides or the note below or following url for the details of Mockito methods .
+https://www.javatpoint.com/methods-of-mockito
+	
+	
+	
+Adding test case for Service while mocking the Repository
+Refer EmployeeServiceTest	
+1. 	Create a Mock of Repository
+	Inject it into service.
+	Set mock result in repository 
+	Verify that the result is appropriate.
+	
+2. For Controller testing.
+	TestRestTemplate can be used to call Rest methods.
+	
+Mockito method references: https://www.javatpoint.com/methods-of-mockito
+
+	Mockit methods
+
+	a. mock()
+		used to create mock objects of a given class or interface.
+	b. when()
+		enables stubbing methods.
+		Used when we want to mock to return specific values when particular methods are called.
+		The input to this is a method. Those methods can take parameters too.
+			
+		e.g.
+			when(mock.someCode ()).thenReturn(5);  
+			when(getStateList("India"))
+				Only when this parameter is given it will return the value we ask it to return.
+				
+	c. verify()
+		Used to check whether some specified methods are called or not
+		Mockito framework keeps track of all the method calls with their parameters for mocking objects.
+		Called Behavioral testing.
+			Checks if the methods are called with right parameters.
+			Doesn't bother about the result.
+		
+	
+
+2.  		
