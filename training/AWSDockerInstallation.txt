@@ -1,0 +1,63 @@
+Get AWS Instance
+----------------
+
+login to AWS
+Search for EC2
+Click on "Lauch Instance"
+Select the type you want - we choose "Ubuntu Server 18.04 LTS "
+Select the free tier and Click on "Review and Launch"
+Click on Add Storage link and verify that it is atleast 8 GB
+Click on "Configure Security Group"
+	Click "Add Rule"
+	Select Type - "HTTP" 	
+	Click "Add Rule"
+	Select Tyep - "HTTPS"
+	
+Click "Review and Launch"
+
+Download the security key 
+	Will download a .pem
+
+Click "View Instance"
+
+
+Edit the name and provide a "Name"
+
+Wait for sometime for the instance to be Active.
+
+Get the IP
+	Verify the IP address above and below are both same.
+		You may have to select the machine for this.
+		
+
+Generate a .ppk file from the .pem file
+---------------------------------------
+
+-------------------------------------------------------------------
+Create keys
+Navigate to “My Account”
+Select “Key Management”
+Create New Key.
+During the key creation process you will be prompted to download your private key file in .PEM format. You will not be able to download the private key again as it is not stored in vCloud Express.
+The “Default” checkbox is used for the API.
+Deploy server and select key
+Connect
+
+SSH (Mac/Linux)
+Copy .PEM file to the machine from which you are going to connect.
+Make sure permissions on .PEM file are appropriate (chmod 600 file.pem)
+Connect with ssh command: ssh ubuntu@ipaddress –i privkey.pem
+Putty (Windows)
+-----------------------------------------------------------------------------
+Download Putty and puttygen from
+Use puttygen to convert .PEM file to .PPK file.
+Start puttygen and select “Load”
+Select your .PEM file.
+Putty will convert the .PEM format to .PPK format. 
+Select “Save Private Key” A passphrase is not required but can be used if additional security is required.
+Connect with Putty.
+
+Launch Putty and enter the host IP address. If connecting to the 10.X private address you must first establish an SSL VPN connection.
+Navigate to Connection/SSH/Auth
+Click “Browse” and select the .PPK file you exported from puttygen.
+Click “Open.” When connection comes up enter username (default is ubuntu).
