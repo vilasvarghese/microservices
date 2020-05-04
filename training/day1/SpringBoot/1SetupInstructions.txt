@@ -1,0 +1,22 @@
+Set up dev. env. for Spring Boot
+--------------------------------	
+
+	Step 1 : Install java 8
+	Verify installation 
+	java -version should work.
+	echo $JAVA_HOME
+
+	Step 2 : Install Eclipse
+Follow the steps at
+https://www.eclipse.org/downloads/packages/installer
+
+	Step 3 : Install STS in Eclipse 
+https://www.codejava.net/ides/eclipse/install-spring-tool-suite-for-existing-eclipse-ide	
+	STS: Has spring specific features.
+	
+	STS: Install from Eclipse marketplace.
+
+	Step 4: Create a very simple Spring Boot application and verify
+https://blog.netgloo.com/2014/05/18/very-basic-web-application-with-spring-mvc-spring-boot-and-eclipse-sts/
+
+

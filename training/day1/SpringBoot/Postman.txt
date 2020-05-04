@@ -1,0 +1,40 @@
+Making a POST request
+
+Install POSTMAN
+
+1. Making a POST request
+
+	a. Select request type as "POST"
+	
+	b. Enter the url: 
+		e.g. http://localhost:8081/companies
+	
+	c. Add Content-Type: application/json in Headers
+		
+	d. In Body, enter the following raw data
+{
+    "id": "Hexaware",
+    "name": "Hexaware India Pvt Ltd",
+    "numberOfEmployees": 10000
+	
+}
+
+	e. Click "Send"
+	
+	Verify: Observe the status in the bottom, it should be 200: OK
+	
+
+2. Making a get request
+
+	a. Select request type as "Get"
+	
+	b. Enter the URL
+		e.g. http://localhost:8081/companies
+		
+	c. Click "Send"
+	
+	Verify: The result should appear below.
+	
+	Get request doesn't need any json input. This should work from browser as well.
+	
+	

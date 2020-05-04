@@ -1,0 +1,124 @@
+1. Create a Maven project.
+
+2. File -> New -> Search "maven" -> Maven Project
+
+3. Archetype: Helps you select a template.
+	I always prefer to skip this.
+		- Spring Boot Archetype is not a default.
+		
+	Click Next
+	
+4. Enter following details in "New Maven Project"
+	Group Id: com.hsbg.firstspringboot
+	Artifact Id: firstspringboot
+	Packaging: jar
+	Name: firstspringboot
+	Description: Detailed description
+	
+	Click Finish
+	
+Maven will download and create a simple project.
+
+5. Remove any dependency added by default.
+
+Steps to convert this to a Spring Boot project.
+
+6. Add spring-boot-starter-parent as parent project
+	<parent>				
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.5.RELEASE</version>
+	</parent>
+
+	
+	This project will inherit configurations from the above parent project.
+	Spring Boot has convention over configurations.
+	All opinionated default configurations that Spring Boot wants us to have in our project are all coded into this.
+	This way we get all configurations for free.
+	
+	
+Declare dependencies.	
+
+7. We are creating web application.
+	Add following dependecies
+		spring-boot-starter-web
+
+	<dependencies>
+			<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- All other dependecies should be added here-->
+		
+	</dependencies>
+	
+	Verify the maven dependencies if this jar is available.
+	
+N.B: Check troubleshooting guide for what to do if jar is not downloaded.
+
+
+8. Add jdk 1.8 as project dependencies
+	Add 1.8 version in properties.
+	
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+	
+	
+9. Goto src/main/java folder
+	
+	Question: What is src/main/java folder and src/main/test folder?
+	
+	There should be a *Application.java file inside this if you had created a SpringBoot project.
+	
+	a. Create a java file with name preferably XXXXApplication.java
+		XXXXApplication.java is only a convention.
+	
+	b. Add a main method to this.
+		
+	c. Add the following code.
+		ConfigurableApplicationContext context = SpringApplication.run(XXXXApplication.class, args);
+	
+	d. Add @SpringBootApplication
+		This makes it the starting point of the application.
+		Preferably you should have only one XXXXApplication class.
+		
+	
+	Add SOP inside this.
+	
+10. Run the class
+	Verify that the SOP is getting printed.
+	
+
+11. Create another POJO say Employee.java
+		Add some properties and a print method.
+		Add @Component annotation to Employee.java
+		
+----------------------------------------------
+@Component 
+	@Component is found during classpath scanning 
+	registered in the context as a Spring bean. 
+	Famous Specializations of @Components
+		@Service, 
+		@Repository, 
+		@Controller 
+			@RestController is a specialization of @Controller
+
+@ComponentScan 
+	Ensures ComponentScan is executed at startup.
+	@Component are found and registered as Spring beans. 
+	Automatically included with @SpringBootApplication.
+----------------------------------------------	
+
+12. Get the instance of Employee inside main method and execute some function inside that.
+
+			Employee emp = context.getBean(Employee.class);
+		emp.print();
+
+Execute this program and verify that those values are also getting printed.
+
+------------------------------------------------
+Now we were able to wire the employee object in.
+------------------------------------------------
+Who created the instance of Employee.java?

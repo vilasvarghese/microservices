@@ -1,0 +1,27 @@
+We are going to add our first RestController.
+
+1. Create a POJO in the same package (or below) XXXXApplication.java
+	
+2. Annotate it as @RestController
+	This makes it a RestController
+	
+	Question: What is a Controller in mvc?
+	
+3. Add a new method with following details
+	name: that you like
+	annotate: @RequestMapping
+	return: what you like.
+	
+4. Execute this and verify the message on the screen.
+
+Question: What type of HTTP request was that?
+		How did Spring boot know and map it or is it not required for it know?
+
+N.B: Internally Spring web uses spring-webmvc.
+	This gives Controller support.
+	
+	How did the response got converted to html?
+	@RestController mapping
+		embeds the response from the method in the http response object and returns back.
+	
+

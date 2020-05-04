@@ -1,0 +1,68 @@
+Implement Employee which belongs to Company.
+
+1. Create a new package "Employee" 
+
+2. Create a Employee class with following parameters
+		Id,
+		Name
+		Salary 
+	a. Add following methods to the Employee class.
+		getter/setter methods
+		Default Constructor
+		Parameterized Constructor
+		
+	b. Add class level annotation @Entity
+	
+	c. Make Id pk by adding @Id tag to it.
+	
+	d. Employee belongs to a company. So one way to add that relationship is add a Company object in Employee
+		Annotate it with @ManyToOne because Many employees are related to the same Company.
+		
+		
+
+3. Create an Employee Controller
+	a. Add @RestController annotation to this.
+	
+	b. Create an @Autowired instance of EmployeeService.
+	
+	c. Add getAllEmployees which returns List<Employee>
+	url: /companies/{companyId}/employees
+		This is the standard url design for dependent objects
+	
+	d. Get the companyId from @PathVariable
+	
+	e. return employeeService.getAllEmployees(companyId);
+
+	f. Add a method to get just a single Optional<Employee> object.
+		Parameters: 
+		@PathVariable String companyId, @PathVariable String id
+	
+	g. url: /companies/{companyId}/employees/{id}
+	
+	h. return return employeeService.getEmployee(id);
+	
+	i. Add a POST method
+		Annotation:  @RequestMapping(method=RequestMethod.POST, value="/companies/{companyId}/employees")
+	
+		Name: addEmployee
+		
+		Parameters: @RequestBody Employee employee, @PathVariable String companyId
+		
+		Set a new Company with the
+		
+		employee.setCompany(new Company(companyId, "",0));
+		
+		call employeeService.addEmployee(employee);
+		}
+	Similarly add PUT, DELETE etc. methods.
+	Reerence: 
+	a. EmployeeController.java
+	b. Compay EmployeeService
+
+
+
+N.B: The controller url should be now company/{id}/employee
+	Fix it accordingly
+
+Fixing the Repository.
+

@@ -1,0 +1,45 @@
+1. If you maven dependencies are not automatically downloaded.
+--------------------------------------------------------------
+
+	a. Right click on project
+	b. Click Maven
+	c. Click "Update project"
+	
+	or
+	
+	a. Click "Windows"
+	b. Click "Preferences"
+	c. Check "Download repository index on Startup"
+	d. Click "Apply and Close"
+	e. Restart Eclipse
+	
+
+2. 	To rebuild the project
+--------------------------
+	a. Click Project
+	b. Click Clean
+	
+3. Web server failed to start. Port 8080 was already in use.
+	You probably forgot to stop and kill previous web server.
+	Terminate it.
+	
+	If you want to start the server on a different port, then define "server.port" in the application.properties and retry.
+	
+
+
+
+
+General troubleshooting guidelines
+----------------------------------
+Following questions would be great to think about:
+- Did you try the debugging taught in the class?
+- Were you able to identify which line of Front code is throwing this error?
+- Are you having the same problem with other requests? Or is it just this request you are facing a problem with?
+- Was there a HTTP Call going to backend?
+- Do you see other errors in console?
+- Can you log all the things from the frontend - Can you enable debug logging and monitor the messages in the console on the server side? It should give you a clue. For doing this set the following in application.properties and restart the server.
+	logging.level.org.springframework = debug
+
+- In jwt is the Authorization header value right? `Bearer ${data.token}` for JWT and 'Basic ' + window.btoa(username + ':' + password) for Basic Authentication.
+
+

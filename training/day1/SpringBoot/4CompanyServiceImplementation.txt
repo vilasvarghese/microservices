@@ -1,0 +1,216 @@
+Company service implementation
+-------------------------------
+
+We would need to repeat this - hence please understand this carefully.
+
+Reference: 
+
+ 
+1. Create a new project with web dependency
+	
+	Click File - New - Project - 
+	
+	Search for "Spring" and select "Spring Starter Project"
+	
+	Click "Next"
+	
+	Ensure "Maven" is selected in Type
+	Enter Name, Group, Artifact, Version, Description and Package
+	
+	Click "Next
+	
+	Observe "Spring Boot Version"
+	
+	Search for Web and select "Spring Web"
+	
+	Click "Next"
+	
+	Click "Finish"
+	
+2. Create company/Company.java as mentioned in com.hsbg.Company.java
+
+
+3. Create a new Controller class
+	a. Create a new POJO in the same package as XXXXApplication.java
+	
+	b. Add @RestController class level annotation.
+	
+	c. Add following method
+	
+	@RequestMapping("/companies")
+	public List<Company> getCompanies(){
+		return Arrays.asList(
+			new Company("Hexaware", "Hexaware India Pvt Ltd.", 100000),
+			new Company("Oracle", "Oracle India Pvt Ltd.", 50000),
+			new Company("MI", "MobileIron India Pvt Ltd.", 850)
+		);
+	}
+	
+4. Execute the contoller and verify that it is working fine.
+
+5. Create POJO company/CompanyService.java
+
+6. Annotate class with @Service
+
+7. Inject it into the Controller by autowire it.
+
+	a. Add a private instance of Service
+	b. Add @Autowired to the above instance
+
+8. Move the above logic to return a List<Company> inside service class as follows
+
+	public List<Company> getAllCompanies(){
+		return Arrays.asList(
+			new Company("Hexaware", "Hexaware India Pvt Ltd.", 100000),
+			new Company("Oracle", "Oracle India Pvt Ltd.", 50000),
+			new Company("MI", "MobileIron India Pvt Ltd.", 850)
+		);
+	}
+
+9. Call this method from the controller using the @Autowired instance.
+
+10. Execute the service and verify that the list is returned.
+
+Now we will connect this to Database.
+11. Adding Spring Data JPA
+
+	a. Add 	JPA, Apache Derby database
+	JPA includes JPA and Spring Data.
+	Apache Derby : In memory database.
+		Cannot use for production.
+	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+	
+Make our Service connect to a db through a repository	
+12. We need to save the Company entity.
+	
+	a. Make Company a JPA entity
+		Add @Entity to the Company.java
+	
+	b. Make Id the primary key
+		Add @Id to Id variable.
+		
+	With this Spring Data JPA can
+		create a table with name Company
+		Save our company record there
+		Query for a particular company
+		Query for a set of companies
+		Update a company
+		Delete a company 
+		Manage the transaction of the same.
+	
+Wire the entity into Spring JPA using a repository
+13. Create CompanyDAORepository as follows
+
+	public interface CompanyDAORepository extends CrudRepository<Company, String>
+		CrudRepository takes following parameter
+			Company: The entity you want to work with
+			String: The type of the Id you want to work with.
+			
+			If you have a composite primary key, 
+				then define a new Object for that primary key.
+		
+		Check the methods in CrudRepository
+		
+		
+Now from Service we should call the Repository methods.
+	
+14. 
+	a. Autowire the repository in Service
+		@Autowired
+		private CompanyDAORepository companyDAORepository;
+
+	b. Modify the getAllCompanies method to call the Repository.findAll
+		List<Company> companyList = new ArrayList<Company>();
+		companyDAORepository.findAll().forEach(companyList::add);
+		return companyList;
+		
+Now to test this, we need to add data.
+15. So lets add the following methods
+
+	a. In CompanyService
+	public void addCompany(Company company) {
+		companyDAORepository.save(company);
+	}
+
+	Question: What is this doing?
+	
+	b. In CompanyController
+	@RequestMapping(method=RequestMethod.POST, value="/companies")
+	public void addCompany(@RequestBody Company company) {
+		companyService.addCompany(company);
+	}
+	
+	Note the way to add a POST method in controller while the URL remains same.
+
+Now lets execute this.
+
+	Refer Postman.txt to see how to hit these URL.
+	
+
+Verify adding a company and try getting all companies.
+
+	Question: How is this working? Where is the db coming from?
+	
+
+Let's implement the other methods too.
+
+16. Add the following method in CompanyService
+
+	public Optional<Company> getCompany(String id) {
+		return companyDAORepository.findById(id);
+	}
+	
+	#In the CrudRepository, the pk is defined as String. Hence we need to pass a String here.
+	
+
+17. Add the following update method in CompanyService
+	public void updateCompany(String id, Company company) {
+		companyDAORepository.save(company);
+	}
+	
+	#Save works for update as well.
+
+	
+18. Add the following delete method in CompanyService
+
+	public void deleteCompany(String id) {
+		companyDAORepository.deleteById(id);
+	}
+	
+Now we need to add the corresponding Controller methods.
+
+19. Add the following methods to the Controller class.
+
+	a. 	Get method to get a single company given the id
+		
+		@RequestMapping("/companies/{id}")
+		public Optional<Company> getCompany(@PathVariable String id){
+			System.out.println("Inside getCompany");
+			return companyService.getCompany(id);
+		}
+	
+	b. Put method to update a single company
+		@RequestMapping(method=RequestMethod.PUT, value="/companies/{id}")
+		public void updateCompany(@RequestBody Company company, @PathVariable String id) {
+			System.out.println("inside updateCompany");
+			companyService.updateCompany(id, company);
+		}
+
+	c. Delete method to delete a single Company
+	
+		@RequestMapping(method=RequestMethod.DELETE, value="/companies/{id}")
+		public void deleteCompany(@PathVariable String id){
+			System.out.println("Inside deleteCompany");
+			companyService.deleteCompany(id);
+		}
+
