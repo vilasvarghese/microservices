@@ -25,6 +25,11 @@ public class ConfigurationController {
 		
 	}
 	
+	@RequestMapping("/test")
+	public String test() {
+		return "test";
+	}
+	
 	@RequestMapping("/stateList")
 	public List<String> printStateList() {
 		System.out.println("Country "+country);

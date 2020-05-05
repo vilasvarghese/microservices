@@ -38,3 +38,11 @@ Install POSTMAN
 	Get request doesn't need any json input. This should work from browser as well.
 	
 	
+3. 
+
+Payload for creating Employees
+	{
+        "id": "Vilas",
+        "name": "Vilas Varghese",
+        "salary": 580000
+    }

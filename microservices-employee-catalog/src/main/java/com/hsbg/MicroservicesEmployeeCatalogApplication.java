@@ -20,7 +20,7 @@ public class MicroservicesEmployeeCatalogApplication {
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
 		SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-		factory.setConnectTimeout(1000);
+		//factory.setConnectTimeout(1000);
 		return new RestTemplate(factory);
 	}
 }

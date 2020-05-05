@@ -25,5 +25,10 @@ public class EmployeeRatingCatalog {
 		this.rating = rating;
 	}
 	
+	public void print() {
+		System.out.println(employee.toString());
+		System.out.println(rating.toString());
+			
+	}
 	
 }
