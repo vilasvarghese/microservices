@@ -1,0 +1,14 @@
+Implement Rating Service
+------------------------
+
+
+Create a Spring Boot application with following dependencies
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		
+Kindly refer to the rating-service and implement the same.
+	I am returning a hardcoded rating of Rating 5 for every Employees.
+		Want to improve the logic go ahead.

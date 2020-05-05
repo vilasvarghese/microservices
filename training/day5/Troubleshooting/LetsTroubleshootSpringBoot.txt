@@ -43,3 +43,9 @@ Following questions would be great to think about:
 - In jwt is the Authorization header value right? `Bearer ${data.token}` for JWT and 'Basic ' + window.btoa(username + ':' + password) for Basic Authentication.
 
 
+3. Fix proxy issue in Maven
+	Add proxy in 
+	$M2_HOME/conf/settings.xml
+
+	Further details in the documentation below
+	http://maven.apache.org/guides/mini/guide-proxies.html

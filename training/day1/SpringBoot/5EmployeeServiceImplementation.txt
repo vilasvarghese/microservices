@@ -9,62 +9,109 @@ Implement Employee which belongs to Company.
 	a. Add following methods to the Employee class.
 		getter/setter methods
 		Default Constructor
-		Parameterized Constructor
 		
 	b. Add class level annotation @Entity
 	
 	c. Make Id pk by adding @Id tag to it.
 	
 	d. Employee belongs to a company. So one way to add that relationship is add a Company object in Employee
+		Add getter/setter methods for the same.
 		Annotate it with @ManyToOne because Many employees are related to the same Company.
-		
-		
+
+	e. Generate the Parameterized Constructor
+		Constructor should include Employee.
+		 
 
 3. Create an Employee Controller
+
+For getting all employees
 	a. Add @RestController annotation to this.
 	
 	b. Create an @Autowired instance of EmployeeService.
 	
 	c. Add getAllEmployees which returns List<Employee>
-	url: /companies/{companyId}/employees
+ 	url: /companies/{companyId}/employees
 		This is the standard url design for dependent objects
 	
 	d. Get the companyId from @PathVariable
 	
 	e. return employeeService.getAllEmployees(companyId);
 
-	f. Add a method to get just a single Optional<Employee> object.
+For getting a particular employee
+	f. url: /companies/{companyId}/employees/{id}
+	
+	g. Add a method to get just a single Optional<Employee> object.
 		Parameters: 
 		@PathVariable String companyId, @PathVariable String id
+		
+		Optional<Employee> is what Spring Data JPA returns.
 	
-	g. url: /companies/{companyId}/employees/{id}
+	h. Return return employeeService.getEmployee(id);
 	
-	h. return return employeeService.getEmployee(id);
-	
+Creating an employee	
 	i. Add a POST method
 		Annotation:  @RequestMapping(method=RequestMethod.POST, value="/companies/{companyId}/employees")
 	
-		Name: addEmployee
+		Name: addEmployee(@RequestBody Employee employee, @PathVariable String companyId)
 		
-		Parameters: @RequestBody Employee employee, @PathVariable String companyId
-		
-		Set a new Company with the
-		
+	j. Set the company on the employee object add an employee as below.
+	
 		employee.setCompany(new Company(companyId, "",0));
-		
 		call employeeService.addEmployee(employee);
-		}
-	Similarly add PUT, DELETE etc. methods.
-	Reerence: 
-	a. EmployeeController.java
-	b. Compay EmployeeService
+	k. Similarly add PUT, DELETE etc. methods as below
+	
+--------------------------------------	
+	
+		@RequestMapping(method=RequestMethod.PUT, value="/companies/{companyId}/employees/{id}")
+	public void updateEmployee(@RequestBody Employee employee, @PathVariable String companyId, @PathVariable String id) {
+		System.out.println("inside updateEmployee");
+		employee.setCompany(new Company(companyId, "",0));
+		employeeService.updateEmployee(id, employee);
+	}
+	
+	
+	@RequestMapping(method=RequestMethod.DELETE, value="/employees/{id}")
+	public void deleteEmployee(@PathVariable String id){
+		System.out.println("Inside deleteEmployee");
+		employeeService.deleteEmployee(id);
+	}
+--------------------------------------------
 
 
+Most of the Service method's of Employee are similar to the company.
 
-N.B: The controller url should be now company/{id}/employee
-	Fix it accordingly
+4. They are as follows
+-----------------------------------------------------------------------
+	public Optional<Employee> getEmployee(String id) {
+		return employeeDAORepository.findById(id);
+	}
+	
+	public void addEmployee(Employee employee) {
+		employeeDAORepository.save(employee);
+	}
+	
+	public void updateEmployee(String id, Employee employee) {
+		employeeDAORepository.save(employee);
+	}
+	
+	public void deleteEmployee(String id) {
+		employeeDAORepository.deleteById(id);
+	}
+-----------------------------------------------------------------------
 
-Fixing the Repository.
+5. However the findAll method is different. 
+	You would want to find the employees of a specific company
+	So the implementation would change as follows
+	
+	public List<Employee> getAllEmployees(String companyId){
+		List<Employee> employeeList = new ArrayList<Employee>();
+		employeeDAORepository.findByCompanyId(companyId).forEach(employeeList::add);
+		return employeeList;
+	}
+	
+But the Repository doesn't have a findByCompanyId method.
 
-
-
+6. So add the following method to Repository
+	public List<Employee> findByCompanyId(String companyId);
+	
+	

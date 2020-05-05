@@ -1,0 +1,23 @@
+Create a Spring boot project with Web dependency
+
+Create a Controller
+Annotate it with @RestController
+
+Add the following code to it.
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@RequestMapping("/catalog/companies/{companyId}")
+	public List<EmployeeRatingCatalog> getEmployeesRating(@PathVariable String companyId){
+		
+		CompanyEmployees compEmps = restTemplate.getForObject("http://localhost:<port>/companies/"+companyId+"/compemployees", CompanyEmployees.class);
+		int empListSize = compEmps.getEmployeeList().size();
+		List<EmployeeRatingCatalog> employeesRatingList = new ArrayList<EmployeeRatingCatalog>();
+		for (int i =0; i < empListSize; i++) {
+			Employee e = compEmps.getEmployeeList().get(i);
+			Rating r = restTemplate.getForObject("http://localhost:<port>/ratings/employeerating/"+e.getId(), Rating.class);
+			employeesRatingList.add(new EmployeeRatingCatalog(e, r));
+		}
+		return employeesRatingList;
+	}
