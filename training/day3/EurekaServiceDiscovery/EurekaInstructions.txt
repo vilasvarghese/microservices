@@ -10,7 +10,21 @@ Eureka Server configuration
 	
 	spring-cloud.version I am using is Hoxton.SR3.
 	
-2. Add following repositories
+	The version, I am using is <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+	
+2. Add following repositories and dependency management
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
@@ -19,8 +33,11 @@ Eureka Server configuration
 		</repository>
 	</repositories>
 
+
 	this will add some dependecies which otherwise are missed.
 	Ensure the project is from java 8, else they need to add more Jaxb dependencies
+
+	#For details refer start.spring.io
 
 3. Add following into application.properties
 
@@ -42,6 +59,7 @@ eureka.client.fetch-registry = false		# With this, we inform customers that they
 
 Eureka client configuraitons
 ----------------------------
+Following should be done for all three services that we created.
 
 1. Add <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
 		to properties section
@@ -55,6 +73,8 @@ Eureka client configuraitons
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 	</dependency>
+	
+Also add the dependency management and repositories mentioned in the server section above.	
 
 3. Update the application properties 
 	spring.application.name = <Your service name>
@@ -79,4 +99,4 @@ Eureka client configuraitons
 		a. Add @Bean annotation
 		b. Add @LoadBalancer to it so that it can be loadbalancing for us.
 
-	What is now the difference between client and server side discovery? :)
+	Questoin: What is now the difference between client and server side discovery? :)
