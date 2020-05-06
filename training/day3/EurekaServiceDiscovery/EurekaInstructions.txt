@@ -97,6 +97,10 @@ Also add the dependency management and repositories mentioned in the server sect
 9. Add getter method for RestTemplate in Application startup file
 	To the getRestTemplate methods 
 		a. Add @Bean annotation
-		b. Add @LoadBalancer to it so that it can be loadbalancing for us.
+		b. Add @LoadBalanced to it so that it can be loadbalancing for us.
+
+			@LoadBalanced does both service discovery and loadbalancing for you. Interestingly load balancing annotation is on the client services. Can you guess why?
 
 	Questoin: What is now the difference between client and server side discovery? :)
+	
+		
