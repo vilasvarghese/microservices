@@ -7,7 +7,6 @@ Better do this on employee-catalog-service
 	    <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-			<version>Hoxton.SR3</version>
 		</dependency>
 
 	#Check the dependency in mavenrepository....

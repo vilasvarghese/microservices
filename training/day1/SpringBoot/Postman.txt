@@ -44,5 +44,6 @@ Payload for creating Employees
 	{
         "id": "Vilas",
         "name": "Vilas Varghese",
-        "salary": 580000
+        "salary": 580000,
+		
     }

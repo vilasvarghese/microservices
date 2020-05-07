@@ -3,6 +3,16 @@ https://spring.io/guides/gs/routing-and-filtering/
 1. Create a new zuul and web project 
 	Should have dependency zuul and web 
 
+	Add repository 
+		<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
+
+
 2. Add @EnableZuulProxy to the Application class
 
 3. Add the following to the application.properties

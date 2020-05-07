@@ -174,3 +174,47 @@ Now we need to tell the SecurityConfigurer to use our new filter.
 	header
 		Key: Authorization
 		Value: Bearer<space><jwt>
+		
+		
+-------------------------------------------------------------------------------------------
+Reverse method
+
+1. Pull my code.
+
+2. Comment security and xml references in application.properties
+
+3. Comment all code related errors because of that.
+
+4. Run the application and http://localhost:8080/hello should be now accessible.
+
+5. Uncomment the changes in pom.xml
+
+6. Run the server and see the console that it now creates a user.
+
+7. Try accessig http://localhost:8080/hello should not be accessible. Get's redirected to login page.
+
+8. We add WebSecurityConfig and MyUserDetailsService along with it's import.
+
+9. Run the application and now you can access the http://localhost:8080/hello after login as vilas/vilas.
+
+10. Uncomment everything run the application
+
+	a. Make the following request		
+	http://localhost:8080/authenticate
+	Request type: POST.
+	header 
+		Content-Type - json
+	body
+{
+	"username": "vilas",
+	"password": "vilas"
+}
+	
+	This returns a jwt token.
+	
+	b. Make the following request.	
+	http://localhost:8080/hello
+	header
+		Key: Authorization
+		Value: Bearer<space><jwt>
+		

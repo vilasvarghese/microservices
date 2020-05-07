@@ -42,7 +42,12 @@ Environment setup
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
-		
+		<dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <scope>test</scope>
+	    </dependency>
+
 4. Select a file and create a test case for that.
 	New -> "Other" -> Test (JUnit test case)
 	
@@ -50,6 +55,8 @@ Refer either slides or the note below or following url for the details of Mockit
 https://www.javatpoint.com/methods-of-mockito
 	
 	
+5. Add annotation @SpringBootTest
+
 	
 Adding test case for Service while mocking the Repository
 Refer EmployeeServiceTest	
@@ -57,6 +64,30 @@ Refer EmployeeServiceTest
 	Inject it into service.
 	Set mock result in repository 
 	Verify that the result is appropriate.
+
+----------------------------------------------------------------
+//i.e. Add the following Objects
+    @Mock
+    private EmployeeRepository empRepository;
+
+    @InjectMocks
+    private EmployeeService empService = new EmployeeService();
+
+	@Test
+	void testGetAllEmployees() {
+		List<Employee> empList = new ArrayList<Employee>();
+		empList.add(new Employee("1", "Vilas", 10000, "Hexaware"));
+		when(empRepository.findAll()).thenReturn(empList);
+
+		Iterable<Employee> resultEmpList = empService.getAllEmployees("Hexaware");
+		Iterator<Employee> iterator = resultEmpList.iterator();
+		while(iterator.hasNext()) {
+			Employee emp = iterator.next();
+			assertEquals("Vilas", emp.getName(), "Name doesn't match");
+		}
+	}
+
+----------------------------------------------------------------
 	
 2. For Controller testing.
 	TestRestTemplate can be used to call Rest methods.
