@@ -1,3 +1,24 @@
+Permission Denied resolved using 
+
+Add eureka.instance.hostname=localhost
+in all the three client services.
+
+This is because the eureka client should by default look into the localhost to connect to the server.
+But sometimes it doesn't look at the localhost. This could be because the loopback has an issue or something like that.
+Above property would force eureka client to look at the localhost.
+
+Reference
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+----------------------------------------------
 <dependency>
 	<groupId>com.fasterxml.jackson.module</groupId>
     artifactId>jackson-module-scala_2.11</artifactId>

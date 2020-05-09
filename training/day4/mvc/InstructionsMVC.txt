@@ -14,14 +14,15 @@ Refer employee-mvc/pom.xml to see all dependencies
 	- Add @Controller annotation to the class.
 		Ensure NOT to give @RestController annotation.
 	
-4. Write a simple method which returns a String
+4. Write a simple method which returns a String 
+	Annotate with @RequestMapping
 	Execute and verify
 
 5. Modify the method to return a .jsp file
 	Create a jsp page with the same name inside src/main/webapp/
 	Add some text to it.
 	
-6. Execute it and verify that it automatically gets forwarded to the jsp file.
+6. Execute it and verify that it automatically doesn't get forwarded to the jsp file.
 
 7. Add tomcat-jasper dependency
 		<dependency>
