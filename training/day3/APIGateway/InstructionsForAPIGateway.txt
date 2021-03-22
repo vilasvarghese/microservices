@@ -1,5 +1,12 @@
 https://spring.io/guides/gs/routing-and-filtering/
 
+
+#################################################################################
+Zuul is deprecated. Refer below
+D:\PraiseTheLord\HSBGInfotech\Others\vilas\microservices1\apigateway
+#################################################################################
+
+
 1. Create a new zuul and web project 
 	Should have dependency zuul and web 
 

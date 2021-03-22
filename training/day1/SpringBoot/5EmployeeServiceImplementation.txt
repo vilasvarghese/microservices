@@ -3,9 +3,9 @@ Implement Employee which belongs to Company.
 1. Create a new package "Employee" 
 
 2. Create a Employee class with following parameters
-		Id,
-		Name
-		Salary 
+			Id,
+			Name
+			Salary 
 	a. Add following methods to the Employee class.
 		getter/setter methods
 		Default Constructor
@@ -19,7 +19,17 @@ Implement Employee which belongs to Company.
 		Annotate it with @ManyToOne because Many employees are related to the same Company.
 
 	e. Generate the Parameterized Constructor
-		Constructor should include Employee.
+		Constructor should include companyId. Should look like as follows..
+		
+	public Employee(int id, String name, double salary, String companyId) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.salary = salary;
+		this.company = new Company(companyId, "", 0);
+	}
+		
+		 
 		 
 
 3. Create an Employee Controller
@@ -37,6 +47,13 @@ For getting all employees
 	
 	e. return employeeService.getAllEmployees(companyId);
 
+----------------------------------------------------------------------
+	@RequestMapping("/companies/{companyId}/employees")
+	public List<Employee> getEmployees(@PathVariable String companyId){
+		return employeeService.getAllEmployees(companyId);	
+	}
+----------------------------------------------------------------------
+
 For getting a particular employee
 	f. url: /companies/{companyId}/employees/{id}
 	
@@ -47,6 +64,15 @@ For getting a particular employee
 		Optional<Employee> is what Spring Data JPA returns.
 	
 	h. Return return employeeService.getEmployee(id);
+
+----------------------------------------------------------------------	
+	@RequestMapping("/companies/{companyName}/employees/{id}")
+	public Optional<Employee> getEmployee(@PathVariable String companyName, @PathVariable int id){
+		Optional<Employee> optonalEmp = Optional.of(employeeService.getEmployee(companyName, id));
+		return optonalEmp;
+	}
+----------------------------------------------------------------------
+	
 	
 Creating an employee	
 	i. Add a POST method

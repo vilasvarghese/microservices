@@ -21,3 +21,11 @@ Add the following code to it.
 		}
 		return employeesRatingList;
 	}
+
+
+Add following into XXXXApplication file
+	@Bean
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate(factory);
+	}
+	

@@ -11,4 +11,11 @@ Create a Spring Boot application with following dependencies
 		
 Kindly refer to the rating-service and implement the same.
 	I am returning a hardcoded rating of Rating 5 for every Employees.
-		Want to improve the logic go ahead.
+		Want to improve the logic? go ahead.
+
+Try accessing the server and confirm it is working fine..		
+
+Add server.port=8082
+	into application.properties and restart the server.
+	Try to access the server on this new port and it should be working fine..
+	

@@ -94,13 +94,13 @@ Refer EmployeeServiceTest
 	
 Mockito method references: https://www.javatpoint.com/methods-of-mockito
 
-	Mockit methods
+	Mockito methods
 
 	a. mock()
 		used to create mock objects of a given class or interface.
 	b. when()
 		enables stubbing methods.
-		Used when we want to mock to return specific values when particular methods are called.
+		Used when we want a mock to return specific values when particular methods are called.
 		The input to this is a method. Those methods can take parameters too.
 			
 		e.g.

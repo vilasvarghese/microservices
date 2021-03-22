@@ -1,0 +1,40 @@
+Instructions to setup h2 database console
+
+https://java2blog.com/spring-boot-h2-database/
+
+
+1. Add the following dependencies into pom.xml (Replace any other db like derby with h2)
+		<!--  for h2 database and it's console -->
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <scope>runtime</scope>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+		<!--  end of h2 database and it's console -->	
+		
+2. Add the following to application.properties
+
+spring.h2.console.enable=true
+
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=vilas
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+
+3. Start/Restart web server
+
+Goto url http://localhost:8080/h2-console
+
+4. Give JDBC URL as : jdbc:h2:mem:testdb
+	password as "Vilas"
+	Login
+	
+5. Do operations which would create database
+	query from the screen
+	select * from customers;

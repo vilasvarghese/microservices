@@ -1,5 +1,125 @@
 Reference:  service-discovery service
 
+To convert our collaboration application to discover service automatically.
+
+Eureka is not for us to consume.
+	it requires a client which can understand and work with eureka.
+	RestTemplate is an example which can do this.
+
+
+	
+
+Create a Eureka Server 
+----------------------
+	Create new springboot project with web and eureka server dependency 
+		This would come up nicely with all dependencies downloaded.
+		If anything is missing, please 
+			a. check version of eureka-server
+				Add <version>3.0.1</version>
+					Can be found commented in the example
+				or 
+				download the jar and add it to the path.
+		
+		
+	1. 	Add the following into the application.yml
+	----------------------------------------------------------	
+	spring:
+	  application:
+		name: eurekaserver		# Application Server Name
+
+	server:
+	  port: 8083
+	eureka:
+	  client:
+		registerWithEureka: false	# With this server does not attempt to register itself. Else you get lot of error on the console
+		fetchRegistry: false
+		serviceUrl:
+		  defaultZone: http://localhost:8083/eureka/
+	# fetchRegistry: false
+	# With this, we inform customers that they must not store the data of the available instances 	
+	#	in their local cache. This means that they must consult the Eureka server whenever 
+	#	they need to access a service. In production, this is often set to true to 
+	#	expedite requests. I must comment that this cache is updated every 30 seconds by default.
+	----------------------------------------------------------	
+
+	2. Add the annotation @EnableEurekaServer to the application file. 
+	Application file will have both the annotations as follows.
+
+		@SpringBootApplication
+		@EnableEurekaServer
+
+	3. Start the server. Confirm it is running
+		http://localhost:8083/
+	
+	
+On the eureka client
+--------------------
+	Add 
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+
+	Following coniguration needs to be done on all 3 services
+	a. companyservice
+	b. ratingservice
+	c. collaboration service
+	
+	1. Update application.properites as follows
+
+	----------------------------------------------
+	server.port=<PORT e.g. 8090>	#Update the port for each serivce
+	spring.application.name=<SERVICE-NAME e.g. companyservice>
+	eureka.client.serviceUrl.defaultZone: http://localhost:8083/eureka/ #Verify the port.
+	----------------------------------------------
+
+	2. Add the annotation @EnableEurekaClient in the application file as follows
+
+	@SpringBootApplication
+	@EnableEurekaClient
+
+	3. Now start all 3 services. 
+	N.B: Preferably serivce discovery should be started before starting these services.
+
+	All the services along with the name should be listed on server
+	Refresh 
+		http://localhost:8083/
+	
+
+Updating the code of collaboration to remove hardcoding
+
+1. In Controller ensure restTemplate is autowired.
+	@Autowired
+	private RestTemplate restTemplate;	
+
+2. In Application add @LoadBalanced annotation to RestTemplate
+
+	@Bean
+	@LoadBalanced
+	public RestTemplate getRestTemplate() {
+		SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+		return new RestTemplate(factory);
+		//return new RestTemplate();
+	}
+
+	RestTemplate has the ability to work with Eureka and provide client side load balancing.
+	This annotation tells RestTemplate to do client side load balancing. To work with eureka for the same.
+	
+3. Now directly hit the collaboration end point
+	http://localhost:8090/catalog/companies/Hexaware
+	
+	
+	
+	
+	
+	
+OLD method follows
+------------------
+
+
+
+
+
 Eureka Server configuration
 ----------------------------
 
@@ -39,7 +159,7 @@ Eureka Server configuration
 
 	#For details refer start.spring.io
 
-3. Add following into application.properties
+3. Add following into application.properties of server
 
 spring.application.name = eureka-server		# Application Server Name
 server.port = 8761							# Port at which tomcat should listen. Without this it will get messed up.
@@ -51,6 +171,28 @@ eureka.client.fetch-registry = false		# With this, we inform customers that they
 											#	in their local cache. This means that they must consult the Eureka server whenever 
 											#	they need to access a service. In production, this is often set to true to 
 											#	expedite requests. I must comment that this cache is updated every 30 seconds by default.
+
+					OR
+-------------------------------------------------------------------------------
+spring:
+  application:
+    name: eurekaserver		# Application Server Name
+
+server:
+  port: 8083
+eureka:
+  client:
+    registerWithEureka: false	# With this server does not attempt to register itself. Else you get lot of error on the console
+    fetchRegistry: false
+    service-url:
+      defaultZone: http://localhost:8083/eureka
+# fetchRegistry: false
+# With this, we inform customers that they must not store the data of the available instances 	
+#	in their local cache. This means that they must consult the Eureka server whenever 
+#	they need to access a service. In production, this is often set to true to 
+#	expedite requests. I must comment that this cache is updated every 30 seconds by default.
+-------------------------------------------------------------------------------					
+
 
 4. Add @EnableEurekaServer and start the server.
 
@@ -78,10 +220,22 @@ Also add the dependency management and repositories mentioned in the server sect
 
 3. Update the application properties 
 	spring.application.name = <Your service name>
-
-4. Start the client services
+-----------------------------------------------------
+spring:
+  application:
+    name: eurekaclient
+server:
+  port: 8084
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8083/eureka
+------------------------------------------------------
+4. 
+Add @EnableEurekaClient to the Application of client.
+Start the client services
 	
-5. Now refresh http://localhost:8761/
+5. Now refresh http://localhost:<serverport>/
 	All the services should be listed there.
 
 6. Update the place where you are accessing the rest api using restTemplate to <Your service name>
@@ -103,4 +257,15 @@ Also add the dependency management and repositories mentioned in the server sect
 
 	Questoin: What is now the difference between client and server side discovery? :)
 	
-		
+	------------------------
+
+Eureka client
+Update pom.xml with 
+	spring version
+	dependency eureka client
+	service name in application properties
+	@EnableEurekaClient in Application file
+	
+	
+	eureka.client.serviceUrl.defaultZone: http://localhost:8083/eureka/
+	

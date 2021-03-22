@@ -57,6 +57,7 @@ class HelloWorldController {
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
 		try {
+			//Internally this would call MyUserDetailsService.loadUserByUsername and compare userid and password. It may decode/decrypt the password based on the decoder we pass.
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
 			);

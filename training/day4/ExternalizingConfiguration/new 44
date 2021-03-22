@@ -1,0 +1,28 @@
+Examples of configuration
+	db connection
+	credentials
+	feature flags
+	business logic config parameters
+	scenario testing
+	spring boot config
+	dev/test/stage/prod config
+	
+Ability to push config into a service/production
+
+Configuration files can be
+	properties
+	YAML
+	JSON
+	NOT xml anymore
+	
+	
+Goals
+	Externalized
+	Environment specific 
+		(config differently in diff. environment)
+	Consistent
+	Version history
+		track and review version history of prop files
+	Real time 
+		Make change should get propogated.
+

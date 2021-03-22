@@ -2,6 +2,15 @@ Hystrix Circuit Breaker
 -----------------------
 Better do this on employee-catalog-service
 
+
+
+Hystrix is deprecated. Check out D:\PraiseTheLord\HSBGInfotech\Others\vilas\microservices1\circuitBreaker\resilience4j
+
+
+
+
+
+
 1. Add dependency
 
 	    <dependency>

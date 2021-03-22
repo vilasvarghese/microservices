@@ -4,19 +4,16 @@ Refer
 
 Reference 1: 
 	https://docs.spring.io/spring-boot/docs/2.1.8.RELEASE/reference/html/boot-features-external-config.html
-	
+	https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config
 
 1. Create a web spring boot application
 2. Define few properties in key=value pairs in application.properties.
-3. Autowire values using @values annotation.
+3. Autowire values using @Value annotation.
 		@Value("${key}")
 		
 	3 different ways 
 	----------------
-	Refer FirstSpringBoot\config\DbSettings.java
-	
-	
-4. Refer one property file from another
+4. Refer a property from another property in the property file.
 	e.g.
 	country.message = Welcome to ${country.name}
 

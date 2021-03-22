@@ -2,3 +2,27 @@
 Reference 1: 
 https://howtodoinjava.com/spring-boot2/resttemplate/resttemplate-timeout-example/
 
+
+By default RestTemplate uses SimpleClientHttpRequestFactory 
+depends on default configuration of HttpURLConnection.
+Infite timeout by default.
+
+Can be configured while starting jvm
+-Dsun.net.client.defaultConnectTimeout=<TimeoutInMiliSec>
+-Dsun.net.client.defaultReadTimeout=<TimeoutInMiliSec>
+
+RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
+ 
+//Override timeouts in request factory
+private SimpleClientHttpRequestFactory getClientHttpRequestFactory() 
+{
+    SimpleClientHttpRequestFactory clientHttpRequestFactory
+                      = new SimpleClientHttpRequestFactory();
+    //Connect timeout
+    clientHttpRequestFactory.setConnectTimeout(10_000);
+     
+    //Read timeout
+    clientHttpRequestFactory.setReadTimeout(10_000);
+    return clientHttpRequestFactory;
+}
+

@@ -17,33 +17,31 @@ Reference:
 	
 3. Let's do simple authentication to access this api.
 
-	Create a WebSecurityConfig  (in SpringSecurityJwtApplication.java) extends WebSecurityConfigurerAdapter
-
+	Create a WebSecurityConfig  class extends WebSecurityConfigurerAdapter
+		as in SpringSecurityJwtApplication
 	
 
 	a. EnableWebSecurity by adding @EnableWebSecurity
 	
-	b. Have an instance of class implementing UserDetailsService.
+	b. Create an autowired instance of class UserDetailsService.
 	
 	So create a new class implementing  UserDetailsService
+		as in MyUserDetailsService
+	
 		UserDetailsService has
 			loadUserByUsername
-			Takes userName as input
+		Takes userName as input
 			return User object with username and pwd if there is a User with this userName.
-			It not throw an Exception
+			If not throw an Exception
 	Mark it as a Service.
 	
 	Autowire it into WebSecurityConfig
 	
 	b. Define the password encoding 
 		
-	
-	
-	
-	
 	Spring security requires an implementation of the following classes 
-		UserDetails
 		UserDetailsService
+			loadUserByUsername returns UserDetails
 		
 	Spring sercurity from a security point of view is interested to know the following
 		What are his 
@@ -64,7 +62,10 @@ JWT (JSON web token)
 		jjwt (Java json web token)
 		jaxb-api library.
 			There are few jaxb dependencies we need in both java 8 or otherwise.
-			
+		
+N.B: jaxb libraries were a part of jdk1.8. It was moved out latter.
+Depending on which version of java you are using this may/may not be required.
+		
 	
 5. 	Create a class called JwtUtil
 	Refer to the JwtUtil.java.
@@ -96,7 +97,7 @@ We should retrieve the token from header. Validate the token. If valid, is that 
 		This will get the UserDetail object from UserDetailsService
 		Spring's default validation works.
 			Is username and pwd same in our case.
-		If this fails, then throw and Exception.
+		If this fails, then throw an Exception.
 	
 	If validation passes, then 
 		generate the token.
@@ -160,12 +161,12 @@ Now we need to tell the SecurityConfigurer to use our new filter.
 	http://localhost:8080/authenticate
 	Request type: POST.
 	header 
-		Content-Type - json
+		Content-Type - application/json
 	body
-		{
-			"username": "vilas",
-			"password": "vilas"
-		}
+	{
+		"username": "vilas",
+		"password": "vilas"
+	}
 	
 	This returns a jwt token.
 	
@@ -206,9 +207,10 @@ Reverse method
 		Content-Type - json
 	body
 {
-	"username": "vilas",
-	"password": "vilas"
+	"username": "foo",
+	"password": "foo"
 }
+	
 	
 	This returns a jwt token.
 	

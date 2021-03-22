@@ -1,19 +1,33 @@
-	Set up dev. env. for Spring Boot
---------------------------------	
+https://www.edureka.co/blog/spring-boot-setup-helloworld-microservices-example/#InstallSpringToolSuite(STS)inEclipse
 
-	Step 1 : Install java 8
-	Verify installation 
-	java -version should work.
-	echo $JAVA_HOME
 
-	Step 2 : Install Eclipse
-Follow the steps at
+Install jdk if you don't have it already.
+
+
+
+If you need to back up Eclipse
+Folders to backup
+	C:\Users\vilas\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Eclipse
+	C:\Users\vilas\eclipse\jee-2019-03\eclipse\eclipse.exe
+
 https://www.eclipse.org/downloads/packages/installer
 
-	Step 3 : Install STS in Eclipse 
-https://www.codejava.net/ides/eclipse/install-spring-tool-suite-for-existing-eclipse-ide	
-	STS: Has spring specific features.
-	----------------------------------------
+Steps to install eclipse
+https://github.com/in28minutes/SpringIn28Minutes/blob/master/InstallationGuide-JavaEclipseAndMaven_v2.pdf
+
+
+Open Eclipse
+Navigate to 'Help' -> 'Eclipse Marketplace'
+Search STS
+Select the latest version 'Spring Tools 3 Add-On for Spring Tools 4.3.9.16 CI
+Click installer
+Selec the features 
+Click confirm
+Accept agreement
+Restart Eclipse
+
+
+----------------------------------------
 *******************	If STS installation fails or it is not showing spring options *******************
 
 Option 1
@@ -39,20 +53,4 @@ Option 3
 This generally works.
 https://www.yawintutor.com/spring-tool-suite-download-install-release/
 
-
-Download STS
-unzip the file
-Try executing the .jar file
-Alternatively 
-	keep extracting each .jar/zip file inside
-	Double click on STS folder
-
-Alternatively share my folder with students.
 ----------------------------------------
-	
-	STS: Install from Eclipse marketplace.
-
-	Step 4: Create a very simple Spring Boot application and verify
-https://blog.netgloo.com/2014/05/18/very-basic-web-application-with-spring-mvc-spring-boot-and-eclipse-sts/
-
-

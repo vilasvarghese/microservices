@@ -1,0 +1,127 @@
+Reference:
+https://www.javaguides.net/2018/06/spring-framework-overview.html
+
+Spring is an Integration Framework for developing Enterprise Applications easily.
+Spring is an Open Source framework, developed by Rod Johnson.
+
+Spring framework 
+	Simplifies the complexity of enterprise applications 
+	Uses Java beans to implement enterprise applications 
+		previously possible only with enterprise beans.
+
+The Spring Framework is a Java platform 
+	Provides comprehensive infrastructure support for developing Java applications. 
+	Spring handles the infrastructure so application developer can focus on your application.
+
+As an application developer how can I benefit from the Spring platform:
+	Make a Java method execute in a database transaction without having to deal with transaction APIs.
+	Make a local Java method an HTTP endpoint without having to deal with the Servlet API.
+	Make a local Java method a message handler without having to deal with the JMS API.
+	Make a local Java method a management operation without having to deal with the JMX API.
+	
+	
+Goals of Spring
+	Lightweight development with POJO's
+	Dependency injection 
+		promote loose coupling
+	Declarative programming with AOP (Aspect orieiented programming)
+	Miniminze boilerplate Java code.
+	
+
+Advantages of Spring Framework: 
+	1. Ease Enterprise application development: 
+		Support Enterprise application development through POJOs:  
+	2. Easily integrate with other frameworks:
+	3. Ease application Testing:  
+		Spring services can be used to develop and run test 
+			makes testing much easier.
+	4. Modularity: 
+		Many in-built modules such as 
+			Spring MVC, 
+			Spring ORM, 
+			Spring JDBC, 
+			Spring Transactions etc
+	5. Spring Transaction Management: 
+		Flexible Spring Transaction Management 
+			scaled to JTA for global transactions.
+		
+Spring Modules Overview
+	Refer to the image: https://www.javaguides.net/2018/06/spring-framework-overview.html
+	Core Container
+	The Core Container consists of the
+		spring-core
+		spring-beans
+		spring-context, 
+		spring-context-support
+		spring-expression (Spring Expression Language)
+		
+		spring-core and spring-beans 
+			Fundamental parts of the framework
+			IoC and Dependency Injection features.
+		The Context (spring-context) module 
+			Built on Core and Beans modules: 
+			Access objects in JNDI like manner .
+		spring-context-support 
+			Helps integrate common third-party libraries into a Spring application context
+				Caching (EhCache, JCache) 
+				Scheduling (CommonJ, Quartz).
+		Spring-expression 
+			Expression Language support for querying and manipulating an object graph at runtime. 
+			Extension of the unified expression language (unified EL) 
+				specified in the JSP 2.1 specification.
+				
+	2. Spring AOP Module
+		Spring AOP separates business logic from system services 
+		e.g.
+			logging, 
+			Transaction management, 
+			Persistence, 
+			Application resources(e.g: connection pooling). 
+		An AOP Alliance-compliant aspect-oriented programming implementation 
+		Allows us to define, for example, method-interceptors and pointcuts to cleanly decouple code that implements functionality that should be separated
+		The separate spring-aspects module provides integration with AspectJ.
+		
+		Consists of spring-web, spring-webmvc and spring-websocket
+		spring-webmvc
+			mvc implementation
+			REST Web Services implementation for web applications. 
+			Clean separation between domain model code and web forms 
+			Integrates with all of the other features of the Spring Framework.
+		
+		spring-web 
+			Basic web-oriented integration 
+			e.g. multipart file upload functionality 
+			Initialization of	
+				IoC container using Servlet listeners and 
+				web-oriented application context. 
+				Contains an HTTP client and web-related parts of Spring’s remoting support.
+
+	Data Access/Integration layer 
+		Supports 
+			JDBC (spring-jdbc) modules
+				JDBC-abstraction layer 
+				Ease JDBC coding 
+				Parsing of database-vendor specific error codes
+			ORM (spring-orm) 
+				Integration layers for popular object-relational mapping APIs, 
+					including JPA and Hibernate. 
+				Support like 
+					O/R-mapping frameworks in combination 
+					Simple declarative transaction management etc.
+			OXM (spring-oxm) 
+				supports Object/XML mapping implementations like 
+					JAXB, Castor, JiBX and XStream
+			JMS (spring-jms) module 
+				(Java Messaging Service) contains features for producing and consuming messages
+			Transaction (spring-tx) modules.
+				Programmatic and declarative transaction management
+			Since 4.1 support integration with spring-messaging module
+		
+	3. Messaging (spring-messaging) module
+			Core abstractions from the Spring Integration project like 
+				Message, 
+				MessageChannel, 
+				MessageHandler
+				others to serve as a foundation for messaging-based applications. 
+			The module also includes a set of annotations for mapping messages to methods, similar to the Spring MVC annotation based programming model.
+				

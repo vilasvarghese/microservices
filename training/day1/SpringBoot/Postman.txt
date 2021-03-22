@@ -2,22 +2,36 @@ Making a POST request
 
 Install POSTMAN
 
+
+Postman 
+	scalable API testing tool 
+	quickly integrates into CI/CD pipeline. 
+	Started in 2012 as a side project by Abhinav Asthana 
+		simplify API workflow in testing and development. 
+
+	Refer : https://www.guru99.com/postman-tutorial.html for more details
+	
+	
+
+
+
+
+
 1. Making a POST request
 
 	a. Select request type as "POST"
 	
 	b. Enter the url: 
-		e.g. http://localhost:8081/companies
+		e.g. http://localhost:8081/companies	
 	
-	c. Add Content-Type: application/json in Headers
+		c. Add Content-Type: application/json in Headers
 		
 	d. In Body, enter the following raw data
-{
-    "id": "Hexaware",
-    "name": "Hexaware India Pvt Ltd",
-    "numberOfEmployees": 10000
-	
-}
+    {
+        "name": "Hexaware",
+        "description": "Hexaware India Pvt Ltd",
+        "numberOfEmployees": 10000
+    }
 
 	e. Click "Send"
 	
@@ -42,8 +56,30 @@ Install POSTMAN
 
 Payload for creating Employees
 	{
-        "id": "Vilas",
+        "id": 1,
         "name": "Vilas Varghese",
-        "salary": 580000,
+        "salary": 580000
 		
-    }
+}
+
+4. 
+	Seed all data
+	Implement seedData as mentioned in 
+		EmployeeController.java
+	
+	
+	POST request http://localhost:8081/seedData
+	----
+		if you get 405 error, then update request type to POST
+	
+	List companies
+	http://localhost:8081/companies
+	
+	List employees for a company
+	http://localhost:8081/companies/Hexaware/employees
+	
+	http://localhost:8082/ratings/employeerating/Lucky
+	
+	Consolidated result
+	http://localhost:8080/catalog/companies/Hexaware
+	

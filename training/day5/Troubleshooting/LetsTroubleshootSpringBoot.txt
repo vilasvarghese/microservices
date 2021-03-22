@@ -49,3 +49,42 @@ Following questions would be great to think about:
 
 	Further details in the documentation below
 	http://maven.apache.org/guides/mini/guide-proxies.html
+
+
+4. For STS extract
+	Always use "Extract here" and not "Extract All"
+		"Extract All" can run into path issues.
+		
+5. To update Maven repo.
+	Right click on project -> Maven -> Update project
+	
+6. Spring 2.4.3 was not resolving properly
+	Trying moving to spring 2.4.2
+	
+7. Unable to resolve a file.
+	Spring STS usually shows this error when the set up isn't correct.
+
+	Go to the line containing the error
+	Click on the alert bulb so that it can suggest possible fixes
+	From the options, choose the "Fix project setup"
+	Follow the rest so that the project then re-aligns the import order.
+	
+8. If STS is not showing method/attribute help
+
+	Try 'Windows > Preferences > Java > Editor > Content Assist > Advanced'.
+
+	More information
+	https://stackoverflow.com/questions/908489/eclipse-java-code-completion-not-working/908930#908930
+	
+9. While adding Eureka or any other jar if (intellisense) java help is not available,
+	then go to properties of service and in "Java Build Patha" - libraries 
+		verify if the jar is linked.
+		is the jar really present
+		compare with other folders to understand it better.
+		
+	If the files is not present then mvn code can be seen and if required jar can be downloaded from 
+	https://mvnrepository.com/
+
+for e.g.  		
+	https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-server/3.0.1
+		

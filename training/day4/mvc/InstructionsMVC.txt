@@ -17,8 +17,9 @@ Refer employee-mvc/pom.xml to see all dependencies
 4. Write a simple method which returns a String 
 	Annotate with @RequestMapping
 	Execute and verify
+		The request my fail.
 
-5. Modify the method to return a .jsp file
+5. Modify the method to return a .jsp file. Method signature would continue to return String.
 	Create a jsp page with the same name inside src/main/webapp/
 	Add some text to it.
 	

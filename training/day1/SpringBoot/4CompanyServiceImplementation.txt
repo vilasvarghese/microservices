@@ -27,7 +27,10 @@ Reference:
 	
 	Click "Finish"
 	
-2. Create company/Company.java as mentioned in com.hsbg.Company.java
+2. Create company/Company.java with properties
+	name
+	description
+	numberOfEmployees
 
 
 3. Create a new Controller class
