@@ -1,0 +1,9 @@
+Create maven project
+	(New - Other - Maven Project)
+	archtype : webapp
+
+
+Right click -> properties -> Targeted Runtime -> New -> Apache Tomcat <version>
+
+download tomcat and unizp in a directory 
+point that directory 

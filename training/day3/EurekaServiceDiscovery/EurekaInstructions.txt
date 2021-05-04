@@ -269,3 +269,8 @@ Update pom.xml with
 	
 	eureka.client.serviceUrl.defaultZone: http://localhost:8083/eureka/
 	
+	
+-------------------------------
+
+Lunching multiple instances of the same service
+https://www.youtube.com/watch?v=PdxPp-cn7bI	

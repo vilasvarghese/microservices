@@ -6,7 +6,8 @@ Better do this on employee-catalog-service
 
 Hystrix is deprecated. Check out D:\PraiseTheLord\HSBGInfotech\Others\vilas\microservices1\circuitBreaker\resilience4j
 
-
+Reference:
+D:\PraiseTheLord\HSBGInfotech\Others\vilas\microservices\microservices-employee-catalog\src\main\java\com\hsbg\EmployeeCatalogController.java 
 
 
 

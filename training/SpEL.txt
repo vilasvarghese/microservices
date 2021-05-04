@@ -1,0 +1,33 @@
+SpEL
+	Generally beans declared in Spring are static
+	Beans can also be dynamically injected
+		SpEL is used for the same.
+	Using Spring Expression Language we can 
+		Refer to other beans by id attribute
+		Refer to properties and invoke methods defined in other beans
+		Refer to static constants and invoke static methods
+		Perform Mathematical operations on values
+		Perform relation and logical comparisons
+		Perform Regular expression matching
+		Accessing Collections
+		
+Key elements of syntax of SpEL are
+	All spring expression should be declared inside
+		${} or #{}
+	Any bean can be directly accessed using the id attribute of the bean
+	Members and methods of a bean are accessed using the dot "." notation.
+	Static class is referred using T[...]
+	Standard mathematical operations such as +,-, *,/,% etc can be used on numerical properties
+	Standard relational operations such as <, <=, ==, >=, > can be used.
+	
+	Logical operations like and, or, not can be used
+	Matching regular expression: use matches keyword.
+	Regular expression syntax is similar to java
+	Individual elements in list can be accessed using []
+	Filter operations on elements in a list
+		performed using .?[] 
+	Projection of elements in a list
+		performed using .![]
+	Individual elements in a map are accessed using []
+	
+		
