@@ -44,7 +44,7 @@ class EmployeeControllerTest {
 
 	@Test
 	///
-	void testGetEmployeesOfACompany() throws Exception{
+	public void testGetEmployeesOfACompany() throws Exception{
 	
 		ResponseEntity<String> response = restTemplate.getForEntity(
 				new URL("http://localhost:" + port + "/seeddata").toString(), String.class);
@@ -53,6 +53,11 @@ class EmployeeControllerTest {
 				new URL("http://localhost:" + port + "/companies/Hexaware/employees").toString(), String.class);
 	    //assertEquals("Hello Controller", response.getBody());
 		*/
+	}
+	
+	@Test
+	public void testSecond() {
+		assertTrue(true);
 	}
 
 }

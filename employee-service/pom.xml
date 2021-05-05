@@ -70,6 +70,11 @@
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
+		<dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <scope>test</scope>
+	    </dependency>
 	</dependencies>
 
 	<build>
@@ -99,6 +104,4 @@
 			<url>https://repo.spring.io/milestone</url>
 		</repository>
 	</repositories>
-	
-
 </project>
