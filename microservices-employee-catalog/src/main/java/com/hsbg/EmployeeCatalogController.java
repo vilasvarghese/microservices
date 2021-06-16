@@ -45,6 +45,7 @@ public class EmployeeCatalogController {
 	}
 
 	public List<EmployeeRatingCatalog> fallbackEmployeeRating(@PathVariable String companyId) {
+		System.out.println("Inside fallback method");
 		return Arrays.asList(new EmployeeRatingCatalog(
 				new Employee("0", "Timeout artificially created!!", 0, "Hexaware"), new Rating("0", 4)));
 	}
