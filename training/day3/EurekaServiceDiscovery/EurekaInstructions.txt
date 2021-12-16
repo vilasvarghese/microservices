@@ -27,6 +27,7 @@ Create a Eureka Server
 	  application:
 		name: eurekaserver		# Application Server Name
 
+	#Default eureka server port is 8761
 	server:
 	  port: 8083
 	eureka:
