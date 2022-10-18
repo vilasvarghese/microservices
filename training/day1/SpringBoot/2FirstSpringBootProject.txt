@@ -64,7 +64,7 @@ N.B: Check troubleshooting guide for what to do if jar is not downloaded.
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-	
+	#Version 17 for 1.17 and 11 for 1.11
 	
 9. Goto src/main/java folder
 	

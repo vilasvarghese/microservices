@@ -1,0 +1,39 @@
+What is spring 
+	Application framewor
+	Programming and config. model
+	Infrastructure support
+	
+
+problems
+	Huge frameworks
+	Multiple setup steps
+	Multiple config. steps
+	Multiple build and deploy steps
+	
+What is spring boot
+	Opinionated
+	Convention over cofniguration
+	Stand alone
+	Production ready
+	
+Install java and maven
+
+What is maven?
+
+SpringApplication.run(StartApplication.class, args);
+	Setup up default configuration
+	Starts spring application context
+	performs class path scan
+	Starts tomcat server
+	
+Embedded Tomcat Server
+	Convenience
+	Servlet container config is	
+		application config
+	Stanalone application
+	Useful for ms architecture
+	
+
+Spring MVC Controller
+	
+		

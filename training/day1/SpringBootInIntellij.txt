@@ -1,0 +1,11 @@
+https://www.jetbrains.com/help/idea/spring-support.html
+spring is a paid plugin - hence this will force us to pay or trial for 30 days
+
+Instead download spring project from start.spring.io.
+
+
+Adding java 17
+	https://www.jetbrains.com/help/idea/sdk.html#define-sdk
+	
+Maven not working
+	https://mkyong.com/intellij/intellij-idea-cannot-connect-to-the-maven-process/
